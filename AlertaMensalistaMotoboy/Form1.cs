@@ -105,6 +105,9 @@ namespace AlertaMensalistaMotoboy
 
         }
 
-   
+        private void frmimagem_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

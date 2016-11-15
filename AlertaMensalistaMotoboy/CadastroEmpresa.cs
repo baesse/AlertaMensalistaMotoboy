@@ -16,7 +16,8 @@ namespace AlertaMensalistaMotoboy
         public CadastroEmpresa()
         {
             InitializeComponent();
-           
+
+            MessageBox.Show("funciono");
 
             
 
