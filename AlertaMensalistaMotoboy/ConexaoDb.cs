@@ -11,7 +11,7 @@ namespace AlertaMensalistaMotoboy
     {
         public SqlConnection getConexao()
         {
-            SqlConnection conexao = new SqlConnection(@"Server = myServerAddress; Database = myDataBase; User Id = myUsername;Password = myPassword;");
+            SqlConnection conexao = new SqlConnection(@"Server = ; Database = BDALERTA; User Id = sa;Password = 75395146;");
 
             try
             {
