@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +19,7 @@ namespace AlertaMensalistaMotoboy
             InitializeComponent();
         }
 
-        public frmimagem(Empresa empresa)
-        {
-            InitializeComponent();
-            lblretorno.Text = empresa.nome+" "+empresa.observacao;
-            
-           
-        }
+      
 
         private void frmimagem_Resize(object sender, EventArgs e)
         {
@@ -42,38 +37,53 @@ namespace AlertaMensalistaMotoboy
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (!buscalembrete().Equals(null))
-            {
 
 
-                frmimagem cademrpesa = new frmimagem(buscalembrete());
 
-            }
+            buscalembrete();
 
+
+
+
+
+        }
+        public void criaimagem(Empresa cademrpesa)
+        {
+            frmimagem iamgemalerta = new frmimagem();
+            iamgemalerta.lblretorno.Text = cademrpesa.observacao;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
 
         }
 
      
 
-        public Empresa buscalembrete()
+        public void buscalembrete()
         {
-           
+            CultureInfo culture = new CultureInfo("pt-BR");
+            DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+
 
             CadastroEmpresa fomrcadastro = new CadastroEmpresa();
             Empresa cadempresa = fomrcadastro.criaCad();
+
+           
+            string hora = DateTime.Now.ToShortTimeString();
+
 
             ConexaoDb interageBanco = new ConexaoDb();
             SqlConnection conexao = interageBanco.getConexao();
             SqlCommand comando = interageBanco.getComando(conexao);
             comando.CommandType = CommandType.Text;
-            comando.CommandText = "select NOMEEMPRESA,HORARIO,DIASEMANA,OBSERVAO from CAD_EMPRESA where horario=@HORARIO and DIASEMANA=@DIASEMANA";
-            comando.Parameters.Add("@NOMEMEPRESA", cadempresa.nome);
-            comando.Parameters.Add("@HORARIO", cadempresa.horario);
-            SqlDataReader reader = comando.ExecuteReader();
+            comando.CommandText = "SELECT NOMEEMPRESA,HORARIO,DIASEMANA,OBSERVACAO from  CAD_EMPRES ";
+            // comando.Parameters.Add("@HORARIO", hora);
+            SqlDataReader reader = interageBanco.getReader(comando);
+
+
 
             while (reader.Read())
             {
-                string hora = DateTime.Now.ToShortTimeString();
+                string teste = reader.GetString(1);
 
                 if (hora.Equals(reader.GetString(1)))
                 {
@@ -84,28 +94,28 @@ namespace AlertaMensalistaMotoboy
                     cadempresa.horario = reader.GetString(1);
                     cadempresa.diasemana = reader.GetString(2);
                     cadempresa.observacao = reader.GetString(3);
+                    criaimagem(cadempresa);
+                    break;
 
-                    return cadempresa;
 
-                }else
 
-                {
-                    cadempresa = null;
-                    return cadempresa;
 
                 }
-
               
 
 
             }
 
-            conexao.Close();
-            return cadempresa;
+           
 
         }
 
         private void frmimagem_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

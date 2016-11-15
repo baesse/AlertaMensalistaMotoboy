@@ -50,8 +50,8 @@
             // 
             this.cbbdias.FormattingEnabled = true;
             this.cbbdias.Items.AddRange(new object[] {
-            "Segunda",
-            "Terça",
+            "Seg",
+            "Ter",
             "Quarta-Feira",
             "Quinta-Feira",
             "Sexta-Feira",

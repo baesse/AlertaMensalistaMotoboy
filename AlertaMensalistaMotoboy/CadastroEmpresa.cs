@@ -17,7 +17,7 @@ namespace AlertaMensalistaMotoboy
         {
             InitializeComponent();
 
-            MessageBox.Show("funciono");
+           
 
             
 
@@ -38,6 +38,11 @@ namespace AlertaMensalistaMotoboy
                 MessageBox.Show("Favor preencher todos os campos", "Alerta!!!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
 
             }
+            txthorario.Text = "";
+            txtnome.Text = "";
+            txtobservacao.Text = "";
+            cbbdias.Text = "";
+
 
         }
 
@@ -66,12 +71,17 @@ namespace AlertaMensalistaMotoboy
             Empresa cademrpesa = new Empresa
             {
                 nome = txtnome.Text,
+
+
+
                 diasemana = cbbdias.Text,
                 horario = txthorario.Text,
                 observacao = txtobservacao.Text,
 
 
             };
+
+                       
             return cademrpesa;
 
         }
@@ -84,7 +94,7 @@ namespace AlertaMensalistaMotoboy
                 SqlConnection conexao = interageBanco.getConexao();
                 SqlCommand comando = interageBanco.getComando(conexao);
                 comando.CommandType = CommandType.Text;
-                comando.CommandText = "Insert into CAD_EMPRES(NOMEEMPRESA,HORARIO,DIASEMANA,OBSERVAO)VALUES(@NOMEMEPRESA,@HORARIO,@DIASEMANA,@OBSERVACAO) ";
+                comando.CommandText = "Insert into CAD_EMPRES(NOMEEMPRESA,HORARIO,DIASEMANA,OBSERVACAO)VALUES(@NOMEMEPRESA,@HORARIO,@DIASEMANA,@OBSERVACAO) ";
                 comando.Parameters.Add("@NOMEMEPRESA", cadempresa.nome);
                 comando.Parameters.Add("@HORARIO", cadempresa.horario);
                 comando.Parameters.Add("@DIASEMANA", cadempresa.diasemana);
